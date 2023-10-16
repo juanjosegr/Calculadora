@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
 
     // Instancia de la clase Calculo para realizar cálculos.
     val calculo = Calculo()
+    // var para comprobar si se realiza la operacion o no.
+    var seRealizoOperacion = false
 
 
 
@@ -35,14 +37,20 @@ class MainActivity : AppCompatActivity() {
         // Configuración de la acción cuando se presionan botones de números.
         for (numero in listaDeNumeros){
             numero.setOnClickListener(View.OnClickListener {
-                val numeroPresionado = (it as Button).text.toString()               // Obtiene el número presionado como texto.
-                val numeroActgual = pantallaMostrarResultado.text.toString()        // Obtiene el número actual en la pantalla.
-
-                if (numeroActgual == "0"){                                          // Comprueba si el número actual es 0 y lo reemplaza si es el caso.
-                    pantallaMostrarResultado.text = numeroPresionado
-                }else{                                                              // Agrega el número presionado al número actual.
-                    pantallaMostrarResultado.text = "$numeroActgual$numeroPresionado"
+                if (seRealizoOperacion){                                                //Comprobacion de si es operacion nueva o anterior, para no concatenar el numero de la operacion anterior
+                                                                                        //y poder introducir numero nuevo.
+                    pantallaMostrarResultado.text = (it as Button).text.toString()
+                    seRealizoOperacion = false
+                }else{
+                    val numeroPresionado = (it as Button).text.toString()               // Obtiene el número presionado como texto.
+                    val numeroActgual = pantallaMostrarResultado.text.toString()        // Obtiene el número actual en la pantalla.
+                    if (numeroActgual == "0"){                                          // Comprueba si el número actual es 0 y lo reemplaza si es el caso.
+                        pantallaMostrarResultado.text = numeroPresionado
+                    }else{                                                              // Agrega el número presionado al número actual.
+                        pantallaMostrarResultado.text = "$numeroActgual$numeroPresionado"
+                    }
                 }
+
             })
         }
 
@@ -81,9 +89,15 @@ class MainActivity : AppCompatActivity() {
                 if (calculo.num1 != 0.0 && calculo.operaciones.isNotEmpty()){
                 calculo.ingresarNumero(numeroActual)                            // Ingresa el número actual y calcula el resultado.
                 val resultado = calculo.obtenerResultado()
-                                                                                // Muestra el resultado y borra la lógica de cálculo.
-                pantallaMostrarResultado.text = resultado.toString()
+                                                                                // Muestra el resultado, si es acabado en int lo muestra como int y si es float como float
+                                                                                // y luego borra la lógica de cálculo.
+                    if (resultado == resultado.toInt().toDouble()) {
+                        pantallaMostrarResultado.text = resultado.toInt().toString()
+                    } else {
+                        pantallaMostrarResultado.text = resultado.toString()
+                    }
                 calculo.borrar()
+                seRealizoOperacion = true                                       //Realización de operación para no concatenar el num del resultado.
             }else {
                                                                                 // Muestra mensajes de error según diferentes situaciones.
                     if (calculo.num1 == 0.0 && calculo.operaciones.isEmpty()) {

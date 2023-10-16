@@ -13,7 +13,6 @@ class Calculo {
     var num2 = 0.0
     var resultado = 0.0
     var operaciones = ""
-
     /**
      * Ingresa un número en el cálculo.
      *
