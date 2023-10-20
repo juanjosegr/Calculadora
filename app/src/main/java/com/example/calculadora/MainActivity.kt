@@ -10,13 +10,13 @@ import android.widget.Toast
 class MainActivity : AppCompatActivity() {
 
     // Listas de botones para números y operaciones.
-    lateinit var listaDeNumeros: MutableList<Button>
-    lateinit var listaDeOperaciones: MutableList<Button>
+    private lateinit var listaDeNumeros: MutableList<Button>
+    private lateinit var listaDeOperaciones: MutableList<Button>
 
     // Instancia de la clase Calculo para realizar cálculos.
-    val calculo = Calculo()
+    private val calculo = Calculo()
     // var para comprobar si se realiza la operacion o no.
-    var seRealizoOperacion = false
+    private var seRealizoOperacion = false
 
 
 
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Configura la lista de botones para números.
      */
-    fun listaNumeros(){
+    private fun listaNumeros(){
         listaDeNumeros.add(findViewById(R.id.btn_0))
         listaDeNumeros.add(findViewById(R.id.btn_1))
         listaDeNumeros.add(findViewById(R.id.btn_2))
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Configura la lista de botones para operaciones.
      */
-    fun listaOperaciones(){
+    private fun listaOperaciones(){
         listaDeOperaciones.add(findViewById(R.id.btn_Mas))
         listaDeOperaciones.add(findViewById(R.id.btn_Menos))
         listaDeOperaciones.add(findViewById(R.id.btn_Multiplicar))
