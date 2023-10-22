@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Muestra un mensaje de error en forma de Toast.
+     * @param msj el mensaje de error que va mostrar en pantalla.
      */
     private fun mensajesError(msj:String){
         Toast.makeText(this, msj, Toast.LENGTH_SHORT).show()
