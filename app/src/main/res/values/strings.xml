@@ -18,4 +18,5 @@
     <string name="_igual">=</string>
     <string name="_dividir">/</string>
     <string name="_pantallaMostrar">0</string>
+    <string name="_borrarUno"><![CDATA[<-]]></string>
 </resources>
