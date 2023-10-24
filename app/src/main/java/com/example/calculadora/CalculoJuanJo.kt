@@ -7,7 +7,7 @@ package com.example.calculadora
  * @property resultado El resultado de la ultima operación realizada.
  * @property operaciones La operación actual a realizar (por ejemplo, "+", "-", "*", "/").
  */
-class Calculo {
+class CalculoJuanJo {
 
     var num1 = 0.0
     var num2 = 0.0

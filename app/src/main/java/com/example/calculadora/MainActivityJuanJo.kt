@@ -7,14 +7,14 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 
-class MainActivity : AppCompatActivity() {
+class MainActivityJuanJo : AppCompatActivity() {
 
     // Listas de botones para números y operaciones.
     private lateinit var listaDeNumeros: MutableList<Button>
     private lateinit var listaDeOperaciones: MutableList<Button>
 
     // Instancia de la clase Calculo para realizar cálculos.
-    private val calculo = Calculo()
+    private val calculo = CalculoJuanJo()
     // var para comprobar si se realiza la operacion o no.
     private var seRealizoOperacion = false
     //TextView de la pantalla de resultados y de la pantalla de registro.
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main_juanjo)
         pantallaMostrarResultado = findViewById<TextView>(R.id.pantallaMostrarResultado)
         pantallaRegistro = findViewById<TextView>(R.id.pantallaRegistro)
 
@@ -167,40 +167,39 @@ class MainActivity : AppCompatActivity() {
         val btnIgual = findViewById<Button>(R.id.btn_Igual)
         btnIgual.setOnClickListener {
         val numeroActualText = pantallaMostrarResultado.text.toString()
+        if (numeroActualText.isNotEmpty()){
+            val numeroActual = numeroActualText.toDouble()
 
-            if (numeroActualText.isNotEmpty()){
-                val numeroActual = numeroActualText.toDouble()
-
-                if (calculo.num1 != 0.0 && calculo.operaciones.isNotEmpty()){
-                    calculo.ingresarNumero(numeroActual)                            // Ingresa el número actual y calcula el resultado.
-                    if (calculo.operaciones.last() == '/' && numeroActual == 0.0) {
-                        mensajesError("No puedes dividir entre 0.")
-                    } else {
-                            val resultado = calculo.obtenerResultado()
-                            // Muestra el resultado, si es acabado en int lo muestra como int y si es float como float
-                            // y luego borra la lógica de cálculo.
-                            if (resultado == resultado.toInt().toDouble()) {
-                                pantallaMostrarResultado.text = resultado.toInt().toString()
-                            } else {
-                                pantallaMostrarResultado.text = resultado.toString()
-                            }
-                            calculo.borrar()
-                            seRealizoOperacion = true                                       //Realización de operación para no concatenar el num del resultado.
-                            limpiarPantallaRegistro()
-                            agregarNumeroAlRegistro(resultado.toString())
-                    }
-                }else {
-                    // Muestra mensajes de error según diferentes situaciones.
-                    if (calculo.num1 == 0.0 && calculo.operaciones.isEmpty()) {
-                        mensajesError("Ingrese al menos dos número y una operación para obtener un resultado.")
-                    } else if (calculo.num1 != 0.0 && calculo.operaciones.isEmpty()) {
-                        mensajesError("Ingrese una operación para obtener un resultado.")
-                    } else if (calculo.num1 == 0.0 && calculo.operaciones.isNotEmpty()) {
-                        mensajesError("Ingrese al menos dos número para obtener un resultado.")
-                    }
+            if (calculo.num1 != 0.0 && calculo.operaciones.isNotEmpty()){
+                calculo.ingresarNumero(numeroActual)                            // Ingresa el número actual y calcula el resultado.
+                if (calculo.operaciones.last() == '/' && numeroActual == 0.0) {
+                    mensajesError("No puedes dividir entre 0.")
+                } else {
+                        val resultado = calculo.obtenerResultado()
+                        // Muestra el resultado, si es acabado en int lo muestra como int y si es float como float
+                        // y luego borra la lógica de cálculo.
+                        if (resultado == resultado.toInt().toDouble()) {
+                            pantallaMostrarResultado.text = resultado.toInt().toString()
+                        } else {
+                            pantallaMostrarResultado.text = resultado.toString()
+                        }
+                        calculo.borrar()
+                        seRealizoOperacion = true                                       //Realización de operación para no concatenar el num del resultado.
+                        limpiarPantallaRegistro()
+                        agregarNumeroAlRegistro(resultado.toString())
+                }
+            }else {
+                // Muestra mensajes de error según diferentes situaciones.
+                if (calculo.num1 == 0.0 && calculo.operaciones.isEmpty()) {
+                    mensajesError("Ingrese al menos dos número y una operación para obtener un resultado.")
+                } else if (calculo.num1 != 0.0 && calculo.operaciones.isEmpty()) {
+                    mensajesError("Ingrese una operación para obtener un resultado.")
+                } else if (calculo.num1 == 0.0 && calculo.operaciones.isNotEmpty()) {
+                    mensajesError("Ingrese al menos dos número para obtener un resultado.")
                 }
             }
         }
+    }
     }
 
     /**
@@ -213,8 +212,7 @@ class MainActivity : AppCompatActivity() {
             // Borra la calculadora y establece la pantalla en 0.
             calculo.borrar()
             pantallaMostrarResultado.text = "0"
-            registroOperaciones = ""
-            pantallaRegistro.text = registroOperaciones
+            limpiarPantallaRegistro()
         }
     }
 
